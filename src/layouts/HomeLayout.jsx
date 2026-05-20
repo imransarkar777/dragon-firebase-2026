@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import LatestNews from "../components/LatestNews";
 import Navbar from "../components/Navbar";
 import LeftAside from "../components/homelayout/LeftAside";
-import RighAside from "../components/homelayout/RighAside";
+import RighAside from "../components/homelayout/RightAside";
 
 const HomeLayout = () => {
   return (
