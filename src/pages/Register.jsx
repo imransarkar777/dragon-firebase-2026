@@ -1,9 +1,12 @@
 import React, { use, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 const Register = () => {
-  const { createUser, setUser } = use(AuthContext);
+  const { createUser, setUser, updateUser } = use(AuthContext);
   const [nameError, setNameError] = useState("");
+
+
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -15,13 +18,20 @@ const Register = () => {
       setNameError("");
     }
     const email = form.email.value;
-    const photourl = form.photo.value;
+    const photo = form.photo.value;
     const password = form.password.value;
     createUser(email, password)
       .then((res) => {
         const user = res.user;
-        setUser(user);
-        console.log(user);
+        updateUser({ displayName: name, photoUrl: photo })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoUrl: photo });
+            navigate("/");
+          })
+          .catch((w) => {
+            // console.log(w);
+            setUser(user);
+          });
       })
       .catch((e) => {
         const errorCode = e.code;
